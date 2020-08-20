@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 
-const userSchema = new Schema({
+const subscriberSchema = new Schema({
     username: {
         type: String, 
         required: true,
-        min: 6,
+        min: 1,
         max: 15, 
         unique: true
     },
@@ -14,10 +14,15 @@ const userSchema = new Schema({
         type: String,
         required: true, 
         select: false
-    }
+    },
+    subscriber: {
+        type: Boolean, 
+        default: true
+    },
+    plants: [{type: mongoose.Schema.Types.ObjectId, ref: 'Plants'}],
 });
-// the following code will automatically run when we try to save a new user to the database
-userSchema.pre('save', function(next) {
+// the following code will automatically run when we try to save a new subscriber to the database
+subscriberSchema.pre('save', function(next) {
     if(!this.isModified('password'))
         return next();
     bcrypt.hash(this.password, 10, (err, passwordHash) => {
@@ -40,5 +45,4 @@ userSchema.pre('save', function(next) {
 //     });
 // }
 
-module.exports = mongoose.model('User', userSchema);
-
+module.exports = mongoose.model('Subscriber', subscriberSchema);
