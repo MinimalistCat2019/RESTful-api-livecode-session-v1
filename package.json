@@ -1,0 +1,29 @@
+{
+  "name": "restful-api-livecode-session-v1",
+  "version": "1.0.0",
+  "description": "A basic RESTful api created as a practise for a live coding session to show students how to create their own RESTful api.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node listen.js",
+    "dev": "nodemon listen.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MinimalistCat2019/RESTful-api-livecode-session-v1.git"
+  },
+  "author": "Paula",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MinimalistCat2019/RESTful-api-livecode-session-v1/issues"
+  },
+  "homepage": "https://github.com/MinimalistCat2019/RESTful-api-livecode-session-v1#readme",
+  "dependencies": {
+    "aysnc": "0.0.1-security",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.0",
+    "nodemon": "^2.0.4"
+  }
+}
