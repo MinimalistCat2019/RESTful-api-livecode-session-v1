@@ -13,7 +13,8 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true, 
-        select: false
+        select: false,
+        bcrypt: true
     }
 });
 // the following code will automatically run when we try to save a new user to the database
@@ -40,5 +41,15 @@ userSchema.pre('save', function(next) {
 //     });
 // }
 
-module.exports = mongoose.model('User', userSchema);
+const User = (module.exports = mongoose.model('User', userSchema));
 
+module.exports.get = function (callback, limit) {
+    User.find(callback).limit(limit);
+};
+
+module.exports.getUser = function (username) { 
+    return User.findOne({ username })
+    .then((user) => { 
+        return user; 
+    }); 
+};

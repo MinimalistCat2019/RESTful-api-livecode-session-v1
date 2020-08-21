@@ -13,7 +13,8 @@ const subscriberSchema = new Schema({
     password: {
         type: String,
         required: true, 
-        select: false
+        select: false,
+        bcrypt: true
     },
     subscriber: {
         type: Boolean, 
@@ -45,4 +46,46 @@ subscriberSchema.pre('save', function(next) {
 //     });
 // }
 
-module.exports = mongoose.model('Subscriber', subscriberSchema);
+const Subscriber = (module.exports = mongoose.model('Subscriber', subscriberSchema));
+
+module.exports.get = function (callback, limit) {
+    Subscriber.find(callback).limit(limit);
+};
+
+module.exports.getSubscriber = function (username) { 
+    return Subscriber.findOne({ username })
+    .then((subscriber) => { 
+        return subscriber; 
+    }); 
+};
+
+module.exports.updateSubscriber = async (username, updateBody) => {
+    const subscriberExists = await Subscriber.exists({ username: username})
+    if (!subscriberExists) {
+      return new Promise (resolve => {
+          resolve(null)
+      })
+    } else {
+      return Subscriber.findOneAndUpdate({ username: username }, { $set: updateBody }, { new: true }, function (
+        err,
+        subscriber
+      ) {
+        return subscriber;
+      });
+    };
+}
+
+module.exports.getPlantsByName = function (username) {
+    console.log(username)
+    return Subscriber.findOne({ username: username }).populate('plants').then((subscriber) => {
+      const plants = subscriber.plants;
+      return plants;
+    });
+};
+
+module.exports.insertPlants = function (subscriber, plants) {
+    if (!Array.isArray(plants)) {
+      return Subsciber.findOneAndUpdate({ username: subscriber }, { plants }, { new: true });
+    }
+    return Subscriber.findOneAndUpdate({ username: subscriber }, { plants: plants }, { new: true });
+};
