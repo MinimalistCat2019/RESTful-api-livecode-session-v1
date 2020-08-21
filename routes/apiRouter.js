@@ -1,6 +1,6 @@
 const apiRouter = require('express').Router();
 const { addUser, index, sendUser, removeUser } = require('../controllers/User');
-const { sendSubscriber, removeSubscriber, addSubscriber, indexSub, updateSubscriberStatus, viewPlants, addPlantsToSubscriber } = require('../controllers/Subscriber');
+const { sendSubscriber, removeSubscriber, addSubscriber, indexSub, updateSubscriberStatus, viewPlants, addPlantsToSubscriber, removePlantFromSubscriber } = require('../controllers/Subscriber');
 const { indexPlant, addPlant, sendPlant } = require('../controllers/Plant');
 
 apiRouter.route('/users')
@@ -21,9 +21,9 @@ apiRouter.route("/subscribers/:username")
     .patch(updateSubscriberStatus);
 
 
-// apiRouter.route('/plantsbysubscriber/:username')
-//     .get(viewPlants)  
-//     .patch(addPlantsToSubscriber)
+apiRouter.route('/subscribers/plants/:username')
+    .patch(addPlantsToSubscriber)
+    .delete(removePlantFromSubscriber)
 
 apiRouter.route('/plants')
     .get(indexPlant)

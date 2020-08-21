@@ -49,11 +49,11 @@ subscriberSchema.pre('save', function(next) {
 const Subscriber = (module.exports = mongoose.model('Subscriber', subscriberSchema));
 
 module.exports.get = function (callback, limit) {
-    Subscriber.find(callback).limit(limit);
+    Subscriber.find(callback).populate({path:'plants', model: 'Plant'}).limit(limit);
 };
 
 module.exports.getSubscriber = function (username) { 
-    return Subscriber.findOne({ username })
+    return Subscriber.findOne({ username }).populate({path:'plants', model: 'Plant'})
     .then((subscriber) => { 
         return subscriber; 
     }); 
@@ -75,17 +75,10 @@ module.exports.updateSubscriber = async (username, updateBody) => {
     };
 }
 
-module.exports.getPlantsByName = function (username) {
-    console.log(username)
-    return Subscriber.findOne({ username: username }).populate('plants').then((subscriber) => {
-      const plants = subscriber.plants;
-      return plants;
-    });
+module.exports.insertPlants = function (subscriber, plant) {
+    return Subscriber.findOneAndUpdate({ username: subscriber }, {$push: { plants: plant }}, { new: true });
 };
 
-module.exports.insertPlants = function (subscriber, plants) {
-    if (!Array.isArray(plants)) {
-      return Subsciber.findOneAndUpdate({ username: subscriber }, { plants }, { new: true });
-    }
-    return Subscriber.findOneAndUpdate({ username: subscriber }, { plants: plants }, { new: true });
+module.exports.extractPlants = function (subscriber, plant) {
+  return Subscriber.findOneAndUpdate({ username: subscriber }, {$pull: { plants: plant }}, { new: true });
 };

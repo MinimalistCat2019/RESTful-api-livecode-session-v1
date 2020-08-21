@@ -1,4 +1,4 @@
-const { getSubscriber, updateSubscriber, getPlantsByName } = require('../models/Subscriber');
+const { getSubscriber, updateSubscriber, insertPlants, extractPlants } = require('../models/Subscriber');
 const Subscriber = require('../models/Subscriber');
 
 exports.addSubscriber = function (req, res, next) {
@@ -77,24 +77,12 @@ exports.updateSubscriberStatus = function (req, res, next) {
         .catch(next);
   };
 
-exports.viewPlants = function (req, res, next) {
-    getPlantsByName(req.params.username)
-      .then((plants) => {
-        if (plants === null) {
-          res.status(400).send({ msg: "Invalid username" });
-        } else {
-          res.status(200).send({ plants });
-        }
-      })
-      .catch(next);
-  };
-
-  exports.addPlantsToSubscriber = function (req, res, next) {
+exports.addPlantsToSubscriber = function (req, res, next) {
     const username = req.params.username;
-    const plants = req.body.plants;
-  
-    if ("plants" in req.body) {
-      insertPlants(username, plants)
+    const plant = req.body.plant_id;
+
+    if ("plant_id" in req.body) {
+      insertPlants(username, plant)
         .then((subscriber) => {
           if (subscriber === null) {
             res.status(400).send({ msg: "Error when trying to add plants" });
@@ -104,6 +92,25 @@ exports.viewPlants = function (req, res, next) {
         })
         .catch(next);
     } else {
-      res.status(400).sesnd({ msg: "No plants included" });
+      res.status(400).send({ msg: "No plants included" });
+    }
+  };
+
+exports.removePlantFromSubscriber = function (req, res, next) {
+    const username = req.params.username;
+    const plant = req.body.plant_id;
+
+    if ("plant_id" in req.body) {
+      extractPlants(username, plant)
+        .then((subscriber) => {
+          if (subscriber === null) {
+            res.status(400).send({ msg: "Error when trying to add plants" });
+          } else {
+            res.status(200).send({ msg: "Plants successfully added", data: subscriber });
+          }
+        })
+        .catch(next);
+    } else {
+      res.status(400).send({ msg: "No plants included" });
     }
   };
