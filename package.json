@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/MinimalistCat2019/RESTful-api-livecode-session-v1#readme",
   "dependencies": {
-    "aysnc": "0.0.1-security",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",

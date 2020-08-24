@@ -104,9 +104,9 @@ exports.removePlantFromSubscriber = function (req, res, next) {
       extractPlants(username, plant)
         .then((subscriber) => {
           if (subscriber === null) {
-            res.status(400).send({ msg: "Error when trying to add plants" });
+            res.status(400).send({ msg: "Error when trying to delete plants" });
           } else {
-            res.status(200).send({ msg: "Plants successfully added", data: subscriber });
+            res.status(200).send({ msg: "Plants successfully deleted", data: subscriber });
           }
         })
         .catch(next);
