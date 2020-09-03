@@ -4,10 +4,7 @@ const User = require('../models/User');
 exports.addUser = function (req, res, next) {
     // get the username and password from the request body
     const { username, password } = req.body;
-    // Search the database to see if username already exists
-    const user = new User();
-    user.username = username ? username : user.username;
-    user.password = password ? password : user.password;
+    const user = new User({username: username, password:password});
     // save to database
     user.save(function (err) {
         if(err) return next(err);
