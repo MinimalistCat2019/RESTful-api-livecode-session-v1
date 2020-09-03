@@ -1,0 +1,74 @@
+{
+    "POST /users": {
+       "Example REQUEST": {
+        "username": "StaffMember1",
+        "password": "one fine day"
+    }
+    }, 
+       "Example RESPONSE": {
+        "message": {
+            "msgBody": "Account successfully created",
+            "msgError": false
+          }
+        }
+    }, 
+    "GET /users": {
+        "Example RESPONSE": {
+            "status": "success",
+        "message": "Users retrieved successfully",
+        "data": [
+            {
+            "_id": "5f3eab730c0f66276795890f",
+            "subscriber": true,
+            "plants": [],
+            "username": "Jasmine Plants",
+            "__v": 0
+            },
+            {
+            "_id": "5f3eabf8ce8d2527eb30ab53",
+            "subscriber": true,
+            "plants": [],
+            "username": "Poppy Plants",
+            "__v": 0
+            },
+            {
+            "_id": "5f3eb23fa220252a70b6ea1b",
+            "subscriber": true,
+            "plants": [],
+            "username": "Sarah Plants",
+            "__v": 0
+            },
+            {
+            "_id": "5f3ed374b42a892f813d3a80",
+            "username": "Toby Plants",
+            "__v": 0
+            },
+            {
+            "_id": "5f3fc84d0030466f83deeda6",
+            "username": "Rory1",
+            "__v": 0
+            },
+            {
+            "_id": "5f3fcc2e0030466f83deeda7",
+            "username": "Dan",
+            "__v": 0
+            }
+        ]   
+        }
+    },
+    "GET  /users/:username": {
+        "Example RESPONSE": {
+            "user": {
+                "_id": "5f439bc397bbe306bc4d11f9",
+                "username": "Toby",
+                "__v": 0
+              }
+        }
+    },
+    "DELETE /users/:username": {
+        "Example RESPONSE": {
+            "status": "success",
+            "message": "User successfully deleted"
+        }
+    },
+}
